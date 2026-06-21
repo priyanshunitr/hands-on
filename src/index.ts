@@ -1,5 +1,5 @@
 import express from "express";
-import { db } from "./db.ts";
+import { getDbTime } from "./db.ts";
 
 const app = express();
 
@@ -9,9 +9,9 @@ app.get("/", (req, res) => {
 
 app.get("/db", async (_req, res) => {
   try {
-    const result = await db.query("SELECT NOW()");
+    const time = await getDbTime();
 
-    res.json(result.rows[0]);
+    res.json(time);
   } catch (error) {
     res.status(500).json({ error: "Could not connect to Postgres" });
   }
