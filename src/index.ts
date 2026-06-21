@@ -1,46 +1,22 @@
 import express from "express";
-import { checkDatabase, pool } from "./db.ts";
+import { db } from "./db.ts";
 
 const app = express();
-const port = Number(process.env.PORT ?? 3000);
 
 app.get("/", (req, res) => {
-  res.send("Hello via Bun! Try GET /health/db to verify Postgres.");
+  res.send("Hello via Bun!");
 });
 
-app.get("/health/db", async (_req, res, next) => {
+app.get("/db", async (_req, res) => {
   try {
-    const health = await checkDatabase();
+    const result = await db.query("SELECT NOW()");
 
-    res.json({
-      status: "ok",
-      database: health.database_name,
-      time: health.now,
-    });
+    res.json(result.rows[0]);
   } catch (error) {
-    next(error);
+    res.status(500).json({ error: "Could not connect to Postgres" });
   }
 });
 
-const errorHandler: express.ErrorRequestHandler = (error, _req, res, _next) => {
-  console.error(error);
-
-  res.status(500).json({
-    status: "error",
-    message: error instanceof Error ? error.message : "Unexpected error",
-  });
-};
-
-app.use(errorHandler);
-
-const server = app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(3000, () => {
+  console.log("Server is running on http://localhost:3000");
 });
-
-async function shutdown() {
-  await pool.end();
-  server.close(() => process.exit(0));
-}
-
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);

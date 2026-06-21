@@ -6,10 +6,10 @@ To install dependencies:
 bun install
 ```
 
-To start Postgres and Redis:
+Start Postgres:
 
 ```bash
-docker compose up -d postgres redis
+docker compose up -d postgres
 ```
 
 To run:
@@ -24,10 +24,10 @@ Postgres is available at:
 postgresql://admin:password123@localhost:5432/mydb
 ```
 
-Verify the app can connect to Postgres:
+Check Postgres from the app:
 
 ```bash
-curl http://localhost:3000/health/db
+curl http://localhost:3000/db
 ```
 
 This project was created using `bun init` in bun v1.3.14. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
