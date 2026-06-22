@@ -1,12 +1,14 @@
 import express from "express";
 import { getDbTime } from "./db.ts";
 import { testRouter } from "./routes/test.ts";
+import { pubRouter } from "./routes/pub.ts";
 
 const app = express();
 
 app.use("/test", testRouter);
+app.use("/pub", pubRouter);
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send("Hello via Bun!");
 });
 
