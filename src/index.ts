@@ -1,7 +1,10 @@
 import express from "express";
 import { getDbTime } from "./db.ts";
+import { testRouter } from "./routes/test.ts";
 
 const app = express();
+
+app.use("/test", testRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello via Bun!");
