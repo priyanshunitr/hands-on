@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "dev": "bun --watch src/index.ts",
-    "start": "bun src/index.ts"
+    "dev:profile": "bun --watch src/profile/index.ts",
+    "start": "bun src/index.ts",
+    "start:profile": "bun src/profile/index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
